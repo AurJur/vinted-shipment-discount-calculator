@@ -4,6 +4,7 @@ import lt.vln.aj.shipmentdiscount.DiscountCalculationApp;
 import lt.vln.aj.shipmentdiscount.transaction.Transaction;
 import lt.vln.aj.shipmentdiscount.transactionspecification.Carrier;
 import lt.vln.aj.shipmentdiscount.transactionspecification.Size;
+import lt.vln.aj.shipmentdiscount.transactionspecification.Status;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -50,19 +51,17 @@ public class TransactionReaderFromTxtFile implements TransactionsGetter {
         LocalDate date = getDate(split);
         Size size = getSize(split);
         Carrier carrier = getCarrier(split);
-        return new Transaction(
-                (date != null && size != null && carrier != null) ? OK : IGNORED,
-                line,
-                date,
-                size,
-                carrier);
+        Status status = (date != null && size != null && carrier != null) ? OK : IGNORED;
+        date = status.equals(OK) ? date : null;
+        size = status.equals(OK) ? size : null;
+        carrier = status.equals(OK) ? carrier : null;
+        return new Transaction(status, line, date, size, carrier);
     }
 
     private LocalDate getDate(String[] split) {
         try {
             return LocalDate.parse(split[0]);
-        } catch (DateTimeParseException dtpe) {
-            //some exception output would be useful
+        } catch (DateTimeParseException e) {
             return null;
         }
     }
@@ -70,7 +69,7 @@ public class TransactionReaderFromTxtFile implements TransactionsGetter {
     private Size getSize(String[] split) {
         try {
             return Size.valueOf(split[1]);
-        } catch (IllegalArgumentException iae) {
+        } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
             return null;
         }
     }
@@ -78,7 +77,7 @@ public class TransactionReaderFromTxtFile implements TransactionsGetter {
     private Carrier getCarrier(String[] split) {
         try {
             return Carrier.valueOf(split[2]);
-        } catch (ArrayIndexOutOfBoundsException aioobe) {
+        } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
             return null;
         }
     }
