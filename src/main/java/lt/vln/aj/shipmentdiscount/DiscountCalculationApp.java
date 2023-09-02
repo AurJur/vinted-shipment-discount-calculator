@@ -25,7 +25,7 @@ public class DiscountCalculationApp {
         TransactionsOutput transactionsOutput = new TransactionStringOutput();
 
         Flow flow = new Flow(transactionsGetter, discountRuleList, transactionsOutput);
-        String output = flow.doStuff();
+        String output = flow.calculate();
         System.out.println("output = \n" + output);
     }
 

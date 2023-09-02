@@ -28,7 +28,7 @@ public class Flow {
         this.transactionsOutput = transactionsOutput;
     }
 
-    public String doStuff() {
+    public String calculate() {
         List<Transaction> gotTransactions = transactionsGetter.getTransactions();
         List<TransactionWithRegularPrice> transactionsWithRegularPrices = new RegularShippingPriceProvider().getRegularPricesFor(gotTransactions);
         List<TransactionForDiscount> transactionsForDiscount = new ArrayList<>();
