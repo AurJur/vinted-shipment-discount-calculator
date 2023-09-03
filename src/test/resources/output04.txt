@@ -1,0 +1,18 @@
+2015-02-01 S LP 1.50 -
+2015-02-01 SX LP Ignored
+2015-02-01 X LP Ignored
+2015-02-01 S LPX Ignored
+2015-02-01 S X Ignored
+2015-02-01 SLP Ignored
+2015-02-01 SS LPLP Ignored
+2015-13-01 S LP Ignored
+2015-02-30 S LP Ignored
+2015-02-01   LP Ignored
+2015-02-01 S Ignored
+201502-01 S LP Ignored
+2015-2-01 S LP Ignored
+01-02-2015 S LP Ignored
+ Ignored
+. Ignored
+LP S 2015-02-01 Ignored
+2015-02-01 S LP 1.50 -
