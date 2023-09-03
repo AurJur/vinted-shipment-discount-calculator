@@ -22,7 +22,10 @@ public class Flow {
     private final List<DiscountRule> discountRuleList;
     private final TransactionsOutput transactionsOutput;
 
-    public Flow(TransactionsGetter transactionsGetter, List<DiscountRule> discountRuleList, TransactionsOutput transactionsOutput) {
+    public Flow(
+            TransactionsGetter transactionsGetter,
+            List<DiscountRule> discountRuleList,
+            TransactionsOutput transactionsOutput) {
         this.transactionsGetter = transactionsGetter;
         this.discountRuleList = discountRuleList;
         this.transactionsOutput = transactionsOutput;
@@ -30,7 +33,8 @@ public class Flow {
 
     public String calculate() {
         List<Transaction> gotTransactions = transactionsGetter.getTransactions();
-        List<TransactionWithRegularPrice> transactionsWithRegularPrices = new RegularShippingPriceProvider().getRegularPricesFor(gotTransactions);
+        List<TransactionWithRegularPrice> transactionsWithRegularPrices
+                = new RegularShippingPriceProvider().getRegularPricesFor(gotTransactions);
         List<TransactionForDiscount> transactionsForDiscount = new ArrayList<>();
         for (TransactionWithRegularPrice transactionWithRegularPrice : transactionsWithRegularPrices) {
             transactionsForDiscount

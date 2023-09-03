@@ -40,19 +40,24 @@ public class FlowTests {
     public void testCalculate(String inputFilename, String outputFilename) throws IOException, URISyntaxException {
 
         TransactionsGetter transactionGetter = new TransactionReaderFromTxtFile(inputFilename);
-        List<DiscountRule> discountRuleList = List.of(new LowestSSizePriceRule(), new LSizeShipmentViaLpRule(3), new MonthlyLimitRule(new BigDecimal("10.00")));
+        List<DiscountRule> discountRuleList = List.of(
+                new LowestSSizePriceRule(),
+                new LSizeShipmentViaLpRule(3),
+                new MonthlyLimitRule(new BigDecimal("10.00")));
         TransactionsOutput transactionOutput = new TransactionStringOutput();
 
-        String output = new Flow(transactionGetter, discountRuleList, transactionOutput).calculate();
-        String[] outputSplit = output.split("\n");
-        List<String> actualList = Arrays.stream(outputSplit).toList();
+        String actualOutputLine = new Flow(transactionGetter, discountRuleList, transactionOutput).calculate();
+        List<String> actualOutputList = Arrays.stream(actualOutputLine.split("\n")).toList();
 
-        Path path = Paths.get(Objects.requireNonNull(DiscountCalculationApp.class.getClassLoader().getResource(outputFilename)).toURI());
+        Path path = Paths.get(Objects.requireNonNull(DiscountCalculationApp.class.getClassLoader()
+                .getResource(outputFilename)).toURI());
         Stream<String> lines = Files.lines(path);
-        List<String> expectedList = lines.toList();
+        List<String> expectedOutputList = lines.toList();
 
-        for (int i = 0; i < Math.max(actualList.size(), expectedList.size()); i++) {
-            Assertions.assertEquals(expectedList.get(i), actualList.get(i), "At index " + i + ".");
+        Assertions.assertEquals(expectedOutputList.size(), actualOutputList.size(), "Expected and actual lists sizes do not match.");
+
+        for (int i = 0; i < Math.max(actualOutputList.size(), expectedOutputList.size()); i++) {
+            Assertions.assertEquals(expectedOutputList.get(i), actualOutputList.get(i), "At index " + i + ".");
         }
     }
 

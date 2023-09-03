@@ -21,7 +21,10 @@ public class DiscountCalculationApp {
     public static void main(String[] args) {
 
         TransactionsGetter transactionsGetter = new TransactionReaderFromTxtFile("input.txt");
-        List<DiscountRule> discountRuleList = List.of(new LowestSSizePriceRule(), new LSizeShipmentViaLpRule(3), new MonthlyLimitRule(new BigDecimal("10.00")));
+        List<DiscountRule> discountRuleList = List.of(
+                new LowestSSizePriceRule(),
+                new LSizeShipmentViaLpRule(3),
+                new MonthlyLimitRule(new BigDecimal("10.00")));
         TransactionsOutput transactionsOutput = new TransactionStringOutput();
 
         Flow flow = new Flow(transactionsGetter, discountRuleList, transactionsOutput);

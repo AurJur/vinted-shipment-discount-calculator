@@ -35,7 +35,8 @@ public class TransactionReaderFromTxtFile implements TransactionsGetter {
     @Override
     public List<Transaction> getTransactions() {
         try {
-            Path path = Paths.get(Objects.requireNonNull(DiscountCalculationApp.class.getClassLoader().getResource(fileName)).toURI());
+            Path path = Paths.get(Objects.requireNonNull(DiscountCalculationApp.class.getClassLoader()
+                    .getResource(fileName)).toURI());
             try (Stream<String> lines = Files.lines(path)) {
                 return lines
                         .map(this::stringLineToObject)
