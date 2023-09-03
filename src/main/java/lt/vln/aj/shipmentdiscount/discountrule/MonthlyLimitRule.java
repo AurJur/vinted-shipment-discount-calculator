@@ -15,12 +15,8 @@ import java.util.Map;
  */
 public class MonthlyLimitRule implements DiscountRule {
 
-    private final BigDecimal freeAmountPerMonth;
+    private static final BigDecimal freeAmountPerMonth = new BigDecimal("10.00");
     private final Map<YearMonth, BigDecimal> discountProvidedMonthMap = new HashMap<>();
-
-    public MonthlyLimitRule(BigDecimal freeAmountPerMonth) {
-        this.freeAmountPerMonth = freeAmountPerMonth;
-    }
 
     @Override
     public TransactionForDiscount apply(TransactionForDiscount t) {

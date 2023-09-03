@@ -9,7 +9,6 @@ import lt.vln.aj.shipmentdiscount.input.TransactionsGetter;
 import lt.vln.aj.shipmentdiscount.output.TransactionStringOutput;
 import lt.vln.aj.shipmentdiscount.output.TransactionsOutput;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -23,8 +22,8 @@ public class DiscountCalculationApp {
         TransactionsGetter transactionsGetter = new TransactionReaderFromTxtFile("input.txt");
         List<DiscountRule> discountRuleList = List.of(
                 new LowestSSizePriceRule(),
-                new LSizeShipmentViaLpRule(3),
-                new MonthlyLimitRule(new BigDecimal("10.00")));
+                new LSizeShipmentViaLpRule(),
+                new MonthlyLimitRule());
         TransactionsOutput transactionsOutput = new TransactionStringOutput();
 
         Flow flow = new Flow(transactionsGetter, discountRuleList, transactionsOutput);

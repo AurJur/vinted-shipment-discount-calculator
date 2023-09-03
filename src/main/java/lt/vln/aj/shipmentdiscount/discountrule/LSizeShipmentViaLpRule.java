@@ -34,13 +34,9 @@ import static lt.vln.aj.shipmentdiscount.transactionspecification.Size.L;
  */
 public class LSizeShipmentViaLpRule implements DiscountRule {
 
-    private final Integer freeShipmentNumber;
+    private static final Integer freeShipmentNumber = 3;
     private final List<YearMonth> discountProvidedMonthList = new ArrayList<>();
     private int shipmentCounter = 0;
-
-    public LSizeShipmentViaLpRule(Integer freeShipmentNumber) {
-        this.freeShipmentNumber = freeShipmentNumber;
-    }
 
     @Override
     public TransactionForDiscount apply(TransactionForDiscount t) {

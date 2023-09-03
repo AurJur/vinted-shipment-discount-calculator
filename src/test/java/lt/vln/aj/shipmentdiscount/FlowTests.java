@@ -13,7 +13,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -42,8 +41,8 @@ public class FlowTests {
         TransactionsGetter transactionGetter = new TransactionReaderFromTxtFile(inputFilename);
         List<DiscountRule> discountRuleList = List.of(
                 new LowestSSizePriceRule(),
-                new LSizeShipmentViaLpRule(3),
-                new MonthlyLimitRule(new BigDecimal("10.00")));
+                new LSizeShipmentViaLpRule(),
+                new MonthlyLimitRule());
         TransactionsOutput transactionOutput = new TransactionStringOutput();
 
         String actualOutputLine = new Flow(transactionGetter, discountRuleList, transactionOutput).calculate();
@@ -56,7 +55,7 @@ public class FlowTests {
             expectedOutputList = lines.toList();
         }
 
-        Assertions.assertEquals(expectedOutputList.size(), actualOutputList.size(), "Expected and actual lists sizes do not match.");
+        Assertions.assertEquals(expectedOutputList.size(), actualOutputList.size(), "Expected and actual output lists sizes do not match.");
 
         for (int i = 0; i < Math.max(actualOutputList.size(), expectedOutputList.size()); i++) {
             Assertions.assertEquals(expectedOutputList.get(i), actualOutputList.get(i), "At index " + i + ".");
