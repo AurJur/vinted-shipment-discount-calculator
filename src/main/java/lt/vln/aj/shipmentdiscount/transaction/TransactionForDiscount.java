@@ -9,4 +9,9 @@ import java.math.BigDecimal;
 public record TransactionForDiscount(TransactionWithRegularPrice transactionWithRegularPrice,
                                      BigDecimal discountApplicable,
                                      BigDecimal discountProvided) {
+
+    public TransactionForDiscount(TransactionWithRegularPrice t) {
+        this(t, new BigDecimal("0.00"), new BigDecimal("0.00"));
+    }
+
 }

@@ -8,7 +8,6 @@ import lt.vln.aj.shipmentdiscount.transaction.TransactionForDiscount;
 import lt.vln.aj.shipmentdiscount.transaction.TransactionWithRegularPrice;
 import lt.vln.aj.shipmentdiscount.util.RegularShippingPriceProvider;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,11 +36,7 @@ public class Flow {
                 = RegularShippingPriceProvider.addRegularPricesFor(gotTransactions);
         List<TransactionForDiscount> transactionsForDiscount = new ArrayList<>();
         for (TransactionWithRegularPrice transactionWithRegularPrice : transactionsWithRegularPrices) {
-            transactionsForDiscount
-                    .add(new TransactionForDiscount(
-                            transactionWithRegularPrice,
-                            new BigDecimal("0.00"),
-                            new BigDecimal("0.00")));
+            transactionsForDiscount.add(new TransactionForDiscount(transactionWithRegularPrice));
         }
 
         for (DiscountRule discountRule : discountRuleList) {
