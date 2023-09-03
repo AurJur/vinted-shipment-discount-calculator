@@ -30,12 +30,13 @@ public class FlowTests {
 
     @ParameterizedTest
     @CsvSource({
-            "input01.txt,output01.txt",
-            "input02.txt,output02.txt",
-            "input03.txt,output03.txt",
+            "input01.txt,output01.txt",//original input
+            "input02.txt,output02.txt",//checks LSizeShipmentViaLpRule
+            "input03.txt,output03.txt",//checks LSizeShipmentViaLpRule
             "input04.txt,output04.txt",//wrong inputs test
-            "input05.txt,output05.txt"//TEMP files, for test implementation/debugging
-    })// need a test where LSizeShipment discount can be applied only partially.
+            "input05.txt,output05.txt",//LSizeShipment discount can be applied only partially
+            "input99.txt,output99.txt"//TEMP files, for test implementation/debugging
+    })
     public void testCalculate(String inputFilename, String outputFilename) throws IOException, URISyntaxException {
 
         TransactionsGetter transactionGetter = new TransactionReaderFromTxtFile(inputFilename);
