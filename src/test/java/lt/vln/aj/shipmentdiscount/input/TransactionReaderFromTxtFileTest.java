@@ -67,7 +67,7 @@ class TransactionReaderFromTxtFileTest {
 
         assertThatThrownBy(reader::getTransactions)
                 .isInstanceOf(RuntimeException.class)
-                .hasMessage("Check input value and input file.");
+                .hasMessage("Check input file.");
     }
 }
 

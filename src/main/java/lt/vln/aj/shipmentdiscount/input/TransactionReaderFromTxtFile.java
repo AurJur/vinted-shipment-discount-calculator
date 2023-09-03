@@ -6,11 +6,10 @@ import lt.vln.aj.shipmentdiscount.transactionspecification.Carrier;
 import lt.vln.aj.shipmentdiscount.transactionspecification.Size;
 import lt.vln.aj.shipmentdiscount.transactionspecification.Status;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.List;
@@ -28,16 +27,15 @@ public record TransactionReaderFromTxtFile(String fileName) implements Transacti
 
     @Override
     public List<Transaction> getTransactions() {
-        try {
-            Path path = Paths.get(Objects.requireNonNull(DiscountCalculationApp.class.getClassLoader()
-                    .getResource(fileName)).toURI());
-            try (Stream<String> lines = Files.lines(path)) {
+        try (InputStream in = DiscountCalculationApp.class.getResourceAsStream("/" + fileName)) {
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(in)))) {
+                Stream<String> lines = reader.lines();
                 return lines
                         .map(this::stringLineToObject)
                         .toList();
             }
-        } catch (URISyntaxException | IOException | NullPointerException e) {
-            throw new RuntimeException("Check input value and input file.");
+        } catch (IOException | NullPointerException e) {
+            throw new RuntimeException("Check input file.");
         }
     }
 
