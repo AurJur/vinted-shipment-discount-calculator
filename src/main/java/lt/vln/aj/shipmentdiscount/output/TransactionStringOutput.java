@@ -12,7 +12,7 @@ import static lt.vln.aj.shipmentdiscount.transactionspecification.Status.OK;
  * @author Aurelijus Jurkus
  * @since 2023-08-28
  */
-public class TransactionStringOutput implements TransactionsOutput {
+public record TransactionStringOutput() implements TransactionsOutput {
 
     @Override
     public String output(List<TransactionForDiscount> transactionList) {

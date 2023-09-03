@@ -13,7 +13,7 @@ import static lt.vln.aj.shipmentdiscount.transactionspecification.Size.S;
  * @author Aurelijus Jurkus
  * @since 2023-08-28
  */
-public class LowestSSizePriceRule implements DiscountRule {
+public record LowestSSizePriceRule() implements DiscountRule {
 
     @Override
     public TransactionForDiscount apply(TransactionForDiscount t) {

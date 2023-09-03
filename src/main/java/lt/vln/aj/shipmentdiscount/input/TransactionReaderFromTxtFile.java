@@ -24,13 +24,7 @@ import static lt.vln.aj.shipmentdiscount.transactionspecification.Status.OK;
  * @author Aurelijus Jurkus
  * @since 2023-08-28
  */
-public class TransactionReaderFromTxtFile implements TransactionsGetter {
-
-    private final String fileName;
-
-    public TransactionReaderFromTxtFile(String fileName) {
-        this.fileName = fileName;
-    }
+public record TransactionReaderFromTxtFile(String fileName) implements TransactionsGetter {
 
     @Override
     public List<Transaction> getTransactions() {
@@ -56,7 +50,12 @@ public class TransactionReaderFromTxtFile implements TransactionsGetter {
         date = status.equals(OK) ? date : null;
         size = status.equals(OK) ? size : null;
         carrier = status.equals(OK) ? carrier : null;
-        return new Transaction(status, line, date, size, carrier);
+        return Transaction.builder()
+                .status(status)
+                .originalLine(line)
+                .date(date)
+                .size(size)
+                .carrier(carrier).build();
     }
 
     private LocalDate getDate(String[] split) {
