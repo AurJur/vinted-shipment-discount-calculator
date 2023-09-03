@@ -5,6 +5,7 @@ import lt.vln.aj.shipmentdiscount.transactionspecification.Size;
 import lt.vln.aj.shipmentdiscount.transactionspecification.Status;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  * @author Aurelijus Jurkus
@@ -36,6 +37,41 @@ public class Transaction {
 
     public Carrier carrier() {
         return carrier;
+    }
+
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "status=" + status +
+                ", originalLine='" + originalLine + '\'' +
+                ", date=" + date +
+                ", size=" + size +
+                ", carrier=" + carrier +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Transaction that = (Transaction) o;
+
+        if (status != that.status) return false;
+        if (!Objects.equals(originalLine, that.originalLine)) return false;
+        if (!Objects.equals(date, that.date)) return false;
+        if (size != that.size) return false;
+        return carrier == that.carrier;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = status != null ? status.hashCode() : 0;
+        result = 31 * result + (originalLine != null ? originalLine.hashCode() : 0);
+        result = 31 * result + (date != null ? date.hashCode() : 0);
+        result = 31 * result + (size != null ? size.hashCode() : 0);
+        result = 31 * result + (carrier != null ? carrier.hashCode() : 0);
+        return result;
     }
 
     private Transaction(BuilderInner builderInner) {

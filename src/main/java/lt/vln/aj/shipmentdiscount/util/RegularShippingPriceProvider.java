@@ -31,8 +31,8 @@ public class RegularShippingPriceProvider {
         priceMap.put(new CarrierAndSize(MR, L), new BigDecimal("4.00"));
     }
 
-    private RegularShippingPriceProvider() {
-        throw new AssertionError("Not to be instantiated.");
+    private RegularShippingPriceProvider() throws InstantiationException {
+        throw new InstantiationException("Not to be instantiated.");
     }
 
     public static List<TransactionWithRegularPrice> addRegularPricesFor(List<Transaction> transactions) {

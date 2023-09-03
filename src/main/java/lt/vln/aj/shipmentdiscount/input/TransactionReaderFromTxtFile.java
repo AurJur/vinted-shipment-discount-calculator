@@ -36,8 +36,8 @@ public record TransactionReaderFromTxtFile(String fileName) implements Transacti
                         .map(this::stringLineToObject)
                         .toList();
             }
-        } catch (URISyntaxException | IOException e) {
-            throw new RuntimeException(e);
+        } catch (URISyntaxException | IOException | NullPointerException e) {
+            throw new RuntimeException("Check input value and input file.");
         }
     }
 
