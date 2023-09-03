@@ -26,19 +26,35 @@ import java.util.stream.Stream;
  * @author Aurelijus Jurkus
  * @since 2023-08-28
  */
-public class FlowTests {
+public class FlowTest {
 
     @ParameterizedTest
     @CsvSource({
-            "input01.txt,output01.txt",//original input
-            "input02.txt,output02.txt",//checks LSizeShipmentViaLpRule
-            "input03.txt,output03.txt",//checks LSizeShipmentViaLpRule
-            "input04.txt,output04.txt",//wrong inputs test
-            "input05.txt,output05.txt",//LSizeShipment discount can be applied only partially
-            "input99.txt,output99.txt"//TEMP files, for test implementation/debugging
+            "originalInput.txt,originalInputExpectedOutput.txt",
     })
-    public void testCalculate(String inputFilename, String outputFilename) throws IOException, URISyntaxException {
+    public void testCalculate_originalInput(String inputFilename, String outputFilename) throws IOException, URISyntaxException {
+        commonFlow(inputFilename, outputFilename);
+    }
 
+    @ParameterizedTest
+    @CsvSource({
+            "invalidInputs.txt,invalidInputsExpectedOutput.txt",
+    })
+    public void testCalculate_invalidInputs(String inputFilename, String outputFilename) throws IOException, URISyntaxException {
+        commonFlow(inputFilename, outputFilename);
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "lSizeShipmentViaLpRuleInput01.txt,lSizeShipmentViaLpRuleExpectedOutput01.txt",//checks general logic
+            "lSizeShipmentViaLpRuleInput02.txt,lSizeShipmentViaLpRuleExpectedOutput02.txt",//checks how free shipment is carried on to another month
+            "lSizeShipmentViaLpRuleInput03.txt,lSizeShipmentViaLpRuleExpectedOutput03.txt",//checks when discount can be applied only partially
+    })
+    public void testCalculate_variousLSizeShipmentViaLpInputs(String inputFilename, String outputFilename) throws IOException, URISyntaxException {
+        commonFlow(inputFilename, outputFilename);
+    }
+
+    private void commonFlow(String inputFilename, String outputFilename) throws URISyntaxException, IOException {
         TransactionsGetter transactionGetter = new TransactionReaderFromTxtFile(inputFilename);
         List<DiscountRule> discountRuleList = List.of(
                 new LowestSSizePriceRule(),
