@@ -51,8 +51,10 @@ public class FlowTests {
 
         Path path = Paths.get(Objects.requireNonNull(DiscountCalculationApp.class.getClassLoader()
                 .getResource(outputFilename)).toURI());
-        Stream<String> lines = Files.lines(path);
-        List<String> expectedOutputList = lines.toList();
+        List<String> expectedOutputList;
+        try (Stream<String> lines = Files.lines(path)) {
+            expectedOutputList = lines.toList();
+        }
 
         Assertions.assertEquals(expectedOutputList.size(), actualOutputList.size(), "Expected and actual lists sizes do not match.");
 
