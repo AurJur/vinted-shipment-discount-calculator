@@ -15,8 +15,6 @@ import static lt.vln.aj.shipmentdiscount.transactionspecification.Size.S;
  */
 public class LowestSSizePriceRule implements DiscountRule {
 
-    RegularShippingPriceProvider priceProvider = new RegularShippingPriceProvider();
-
     @Override
     public TransactionForDiscount apply(TransactionForDiscount t) {
         if (isSizeS(t)) {
@@ -36,7 +34,7 @@ public class LowestSSizePriceRule implements DiscountRule {
     }
 
     private BigDecimal getDiscountApplicable(TransactionForDiscount t) {
-        BigDecimal lowest = priceProvider.getFor(LP, S).min(priceProvider.getFor(MR, S));
+        BigDecimal lowest = RegularShippingPriceProvider.getFor(LP, S).min(RegularShippingPriceProvider.getFor(MR, S));
         BigDecimal subtract = t.transactionWithRegularPrice().regularPrice().subtract(lowest);
         if (subtract.compareTo(BigDecimal.ZERO) > 0) {
             return subtract;

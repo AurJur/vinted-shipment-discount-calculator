@@ -31,7 +31,11 @@ public class RegularShippingPriceProvider {
         priceMap.put(new CarrierAndSize(MR, L), new BigDecimal("4.00"));
     }
 
-    public List<TransactionWithRegularPrice> getRegularPricesFor(List<Transaction> transactions) {
+    private RegularShippingPriceProvider() {
+        throw new AssertionError("Not to be instantiated.");
+    }
+
+    public static List<TransactionWithRegularPrice> addRegularPricesFor(List<Transaction> transactions) {
         return transactions
                 .stream()
                 .map(t -> new TransactionWithRegularPrice(
@@ -41,7 +45,7 @@ public class RegularShippingPriceProvider {
                 .toList();
     }
 
-    public BigDecimal getFor(Carrier carrier, Size size) {//TODO private method?
+    public static BigDecimal getFor(Carrier carrier, Size size) {
         CarrierAndSize carrierAndSize = new CarrierAndSize(carrier, size);
         BigDecimal regularPrice = priceMap.get(carrierAndSize);
         return regularPrice;

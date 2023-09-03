@@ -34,7 +34,7 @@ public class Flow {
     public String calculate() {
         List<Transaction> gotTransactions = transactionsGetter.getTransactions();
         List<TransactionWithRegularPrice> transactionsWithRegularPrices
-                = new RegularShippingPriceProvider().getRegularPricesFor(gotTransactions);
+                = RegularShippingPriceProvider.addRegularPricesFor(gotTransactions);
         List<TransactionForDiscount> transactionsForDiscount = new ArrayList<>();
         for (TransactionWithRegularPrice transactionWithRegularPrice : transactionsWithRegularPrices) {
             transactionsForDiscount
